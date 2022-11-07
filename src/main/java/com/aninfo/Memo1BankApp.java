@@ -72,7 +72,7 @@ public class Memo1BankApp {
 	}
 
 
-
+/*
 	@PutMapping("/accounts/{cbu}/withdraw")
 	public Account withdraw(@PathVariable Long cbu, @RequestParam Double sum) {
 		return accountService.withdraw(cbu, sum);
@@ -82,7 +82,7 @@ public class Memo1BankApp {
 	public Account deposit(@PathVariable Long cbu, @RequestParam Double sum) {
 		return accountService.deposit(cbu, sum);
 	}
-
+*/
 
 
 	@PostMapping("/transactions")
@@ -97,8 +97,14 @@ public class Memo1BankApp {
 	}
 
 	@GetMapping("/transactions/{cbu}")
-	public Collection<Transaction> getTransaction(@PathVariable Long cbu) {
+	public Collection<Transaction> getTransactionByCbu(@PathVariable Long cbu) {
 		return transactionService.getTransactionsByCbu(cbu);
+	}
+
+	@GetMapping("/transactions/{id}")
+	public ResponseEntity<Transaction> getTransactionsById(@PathVariable Long id) {
+		Optional<Transaction> transactionOptional = transactionService.getTransactionsById(id);
+		return ResponseEntity.of(transactionOptional);
 	}
 
 	@DeleteMapping("/transactions/{id}")

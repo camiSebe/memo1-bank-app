@@ -8,7 +8,9 @@ import com.aninfo.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,10 +49,19 @@ public class TransactionService {
     }
 
     public Collection<Transaction> getTransactionsByCbu(Long cbu) {
-        return transactionRepository.findAll();
+        Collection<Transaction> allTheTransactions = transactionRepository.findAll();
+        Collection<Transaction> thisCbuTransactions = new ArrayList<>();
+        for (int i=0; i<allTheTransactions.size(); i++) {
+            Transaction actualTransaction = ((List<Transaction>) allTheTransactions).get(i);
+            if (actualTransaction.getCbu().equals(cbu)) {
+                thisCbuTransactions.add(actualTransaction);
+            }
+        }
+
+        return thisCbuTransactions;
     }
 
-    public Optional<Transaction> findById(Long id) {
+    public Optional<Transaction> getTransactionsById(Long id) {
         return transactionRepository.findById(id);
     }
 
