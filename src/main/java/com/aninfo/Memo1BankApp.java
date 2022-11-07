@@ -3,7 +3,6 @@ package com.aninfo;
 import com.aninfo.model.Account;
 import com.aninfo.model.Transaction;
 import com.aninfo.service.AccountService;
-//import com.aninfo.service.TransactionService;
 import com.aninfo.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -72,6 +71,8 @@ public class Memo1BankApp {
 		accountService.deleteById(cbu);
 	}
 
+
+
 	@PutMapping("/accounts/{cbu}/withdraw")
 	public Account withdraw(@PathVariable Long cbu, @RequestParam Double sum) {
 		return accountService.withdraw(cbu, sum);
@@ -84,20 +85,27 @@ public class Memo1BankApp {
 
 
 
-	@PostMapping("/accounts/{cbu}/transactions")
+	@PostMapping("/transactions")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Transaction createTransaction(@RequestBody Transaction transaction) {
 		return transactionService.createTransaction(transaction);
 	}
 
-/*
-//	@GetMapping("/accounts/{cbu}/transactions")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public Collection<Transaction> getTransaction(@PathVariable Long cbu) {
-//		return ;
-//	}
+	@GetMapping("/transactions")
+	public Collection<Transaction> getTransactions() {
+		return transactionService.getTransactions();
+	}
 
-*/
+	@GetMapping("/transactions/{cbu}")
+	public Collection<Transaction> getTransaction(@PathVariable Long cbu) {
+		return transactionService.getTransactionsByCbu(cbu);
+	}
+
+	@DeleteMapping("/transactions/{id}")
+	public void deleteTransaction(@PathVariable Long id) {
+		transactionService.deleteById(id);
+	}
+
 
 	@Bean
 	public Docket apiDocket() {

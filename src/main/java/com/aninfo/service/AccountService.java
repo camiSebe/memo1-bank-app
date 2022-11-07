@@ -17,9 +17,6 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
-    private TransactionService transactionService;
-
 
     public Account createAccount(Account account) {
         return accountRepository.save(account);
